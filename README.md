@@ -1,137 +1,85 @@
 # counterSystemAndroid
 Repositorio de aplicación ContadorIoT para dispositivos Android
 
-# ContadorIoT — CounterClient & DashboardReceiver
+# 📲 Instalación rápida — Contador IoT (APKs Android)
 
-Repositorio con los dos proyectos Android usados en la evaluación **Aplicaciones Móviles para IoT (Unidad 2)**.
+Este repositorio contiene **dos aplicaciones Android (.apk)** listas para instalar en dispositivos físicos para la demostración del proyecto **Contador IoT**.
 
 ---
 
-## 📁 Estructura del ZIP / repositorio
+## 📁 Ubicación de los archivos APK
 
 ```
 ContadorIoT/
-├─ CounterClient/               ← Proyecto Android Studio (Cliente / Emisor)
-├─ DashboardReceiver/           ← Proyecto Android Studio (Dashboard / Servidor)
-├─ apks/                        ← APKs generados (opcional)
-│  ├─ CounterClient.apk
-│  └─ DashboardReceiver.apk
-└─ README.md
+├─ README.md ← este archivo
+└─ APKs/
+   ├─ CounterClient.apk          ← Instalar en dispositivo CLIENTE (TCL 408)
+   └─ DashboardReceiver.apk      ← Instalar en dispositivo SERVIDOR (HUAWEI Y5 2018)
 ```
 
 ---
 
-## ✅ Requisitos previos (PC)
+## ⚙️ Requisitos
 
-| Requisito                     | Versión recomendada |
-|-----------------------------|---------------------|
-| Android Studio               | Arctic Fox / Chipmunk o superior |
-| SDK Platform                 | **Android 34** |
-| Build Tools                  | **34.0.0** |
-| Mínimo SDK del dispositivo   | **24 (Android 7.0)** |
-| JDK                          | **Java 11** |
-| ADB (Android Debug Bridge)   | Incluido con SDK |
+| Elemento | Detalle |
+|----------|--------|
+| Dispositivo **Servidor** | HUAWEI Y5 2018 – debe activar **Zona Wi-Fi / Hotspot** |
+| Dispositivo **Cliente** | TCL 408 – debe conectarse al hotspot del servidor |
+| Permiso necesario | **Permitir instalación desde fuentes desconocidas** en ambos dispositivos |
+| Método de instalación | Copia manual del APK o mediante cable USB / gestor de archivos |
 
 ---
 
-## 📂 Rutas recomendadas (Windows)
+## 🚀 Instalación del APK en dispositivo SERVIDOR (DashboardReceiver.apk)
 
-> Para evitar errores de Gradle en Windows, usar rutas cortas sin espacios
-
-```
-C:\Dev\ContadorIoT\CounterClient
-C:\Dev\ContadorIoT\DashboardReceiver
-```
-
----
-
-## 🚀 Cómo abrir en Android Studio
-
-1. **Descomprime el ZIP**
-2. Abre Android Studio → **Open**
-3. Selecciona `CounterClient/` → abrir → esperar a que gradle sincronice
-4. Repite con `DashboardReceiver/`
-5. Si Android Studio pide descargar SDK o Build Tools → aceptar
+1. Copiar `DashboardReceiver.apk` desde la carpeta `/APKs/` al dispositivo **HUAWEI Y5 2018**.
+2. Abrir el archivo desde **Gestor de archivos / Descargas**.
+3. Aceptar **Instalar desde fuente desconocida** si Android lo solicita.
+4. Instalar y abrir la aplicación.
+5. **Activar el Hotspot Wi-Fi** del teléfono (este dispositivo será el SERVIDOR).
+6. La app mostrará **"Servidor escuchando"** si está lista.
 
 ---
 
-## 🔧 Configuración importante en el código
+## 📡 Instalación del APK en dispositivo CLIENTE (CounterClient.apk)
 
-### IP del servidor (DashboardReceiver)
-En `CounterClient/MainActivity.kt` debe estar configurado así:
-
-```kotlin
-private var DASHBOARD_IP = "192.168.43.1" // IP del dispositivo que actúa como servidor
-private val PORT = 5000
-```
-
-> 💡 **IMPORTANTE:** No usar la IP del cliente. La IP correcta del servidor suele ser la **Puerta de enlace (Gateway)** que aparece en la red Wi-Fi del cliente.
+1. Copiar `CounterClient.apk` al dispositivo **TCL 408**.
+2. Conectar este dispositivo al **Hotspot del HUAWEI** (servidor).
+3. Abrir el archivo y permitir instalación desde fuente desconocida.
+4. Iniciar la aplicación y presionar **Conectar al Dashboard**.
+5. Confirmar que la IP por defecto sea **192.168.43.1** (IP típica del hotspot Android).
+6. Cuando aparezca **"Conectado"**, comenzar a presionar el botón **Incrementar y Enviar**.
 
 ---
 
-## 🏗 Cómo generar APK desde Android Studio
+## ✅ Orden de ejecución recomendado
 
-1. Build → **Build Bundle(s) / APK(s)** → **Build APK(s)**
-2. Android Studio generará el archivo `.apk` en:
-```
-<nombre-del-proyecto>/app/build/outputs/apk/debug/app-debug.apk
-```
-3. Puedes copiar ese APK al teléfono o instalar con **ADB**
-
----
-
-## 📱 Instalación del APK en Android
-
-### Método 1 — Manual (sin ADB)
-1. Copiar el `.apk` al teléfono
-2. Abrir con gestor de archivos
-3. Permitir instalación desde fuentes desconocidas
-
-### Método 2 — Con ADB (recomendado)
-```
-adb install -r CounterClient/app/build/outputs/apk/debug/app-debug.apk
-adb install -r DashboardReceiver/app/build/outputs/apk/debug/app-debug.apk
-```
+| Paso | Acción | Dispositivo |
+|------|--------|------------|
+| 1 | Instalar `DashboardReceiver.apk` y abrir la app | **HUAWEI (Servidor)** |
+| 2 | Activar hotspot Wi-Fi | **HUAWEI (Servidor)** |
+| 3 | Instalar `CounterClient.apk` | **TCL (Cliente)** |
+| 4 | Conectarse al hotspot del HUAWEI | **TCL (Cliente)** |
+| 5 | Abrir `CounterClient` y conectar | **TCL (Cliente)** |
+| 6 | Verificar que el servidor muestre "Cliente Conectado" | **HUAWEI (Servidor)** |
+| 7 | Enviar conteos y monitorear en Dashboard | Ambos |
 
 ---
 
-## 📡 Ejecución y prueba
+## 🎯 Consejo rápido para pruebas
 
-| Paso | Acción |
-|------|------------------------------------------------|
-| 1 | Activar hotspot en el dispositivo **DashboardReceiver (servidor)** |
-| 2 | Conectar el **Cliente (CounterClient)** a esa red Wi-Fi |
-| 3 | Abrir primero **DashboardReceiver** — debe poner "Servidor escuchando" |
-| 4 | En cliente, ingresar o dejar IP como `192.168.43.1` (gateway típica) |
-| 5 | Presionar **Conectar al Dashboard** |
-| 6 | Si la conexión es correcta → el servidor muestra "Cliente conectado" |
-| 7 | Presionar **Incrementar y enviar** → número debe aparecer en el Dashboard |
+- Si al conectar aparece **ECONNREFUSED**, asegúrate de:
+  - Haber abierto primero la app del servidor.
+  - Haber conectado el cliente a la red Wi-Fi del servidor.
+  - Tener la IP configurada como **192.168.43.1** y puerto **5000**.
 
 ---
 
-## 🛠 Errores comunes y soluciones
+## 🧠 Recordatorio final
 
-| Error | Causa | Solución |
-|------|-------|----------|
-| `ECONNREFUSED` | El servidor no estaba ejecutando o IP incorrecta | Abrir DashboardReceiver primero y verificar que IP sea **Gateway**, no del cliente |
-| `Android resource linking failed` | Falta AppCompat / Tema | Verificar dependencias y `Theme.Material3.NoActionBar` |
-| No aparece `Rebuild Project` | Versión nueva de Android Studio | Usar `Build → Make Project` o `Build APKs` |
+> **Servidor = DashboardReceiver.apk (HUAWEI Hotspot)**  
+> **Cliente = CounterClient.apk (TCL conectado al hotspot)**
 
 ---
 
-## 🧠 Notas útiles
-
-- La IP del dispositivo **servidor** (hotspot) casi siempre es **192.168.43.1**
-- El puerto local variable (ejemplo: 47182) que aparece en logs **no es un error**
-- El puerto del servidor (5000) debe ser el mismo en ambos proyectos
-- Puedes editar la IP desde el código o añadir un `EditText` para ingresarla manualmente
-
----
-
-## ✒ Créditos
-
-Proyecto desarrollado para la asignatura **Aplicaciones Móviles para IoT**  
-Institución: **INACAP — Sede San Pedro de la Paz**  
-Autor: **[ Cristian Alejandro Muñoz Mora ]**
-
----
+💬 Si necesitas instalar mediante **ADB con cable USB**, puedo generar un script `.bat` para instalación automática. Solo dime: **“Generar script ADB”**.
